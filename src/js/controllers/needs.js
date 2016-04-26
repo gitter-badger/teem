@@ -26,6 +26,8 @@ angular.module('Teem')
         },
         link: function (scope, element, attrs, needsCtrl) {
           scope.toggleCompleted = function (need, event) {
+            event.stopPropagation();
+
             var newStatus;
 
             if (!scope.project.isContributor()){

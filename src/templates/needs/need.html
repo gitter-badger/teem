@@ -11,7 +11,9 @@
       <i class="fa fa-check"></i>
     </div>
     <div class="need-section need-section-status">
-      <div class="ineed-check-container pull-left" ng-click="$event.stopPropagation(); toggleCompleted(need, $event)" ng-class="(need.completed === 'true') ? 'need-checkbox-true' :  ((need.completed === 'false') ? 'need-checkbox-false' : 'need-checkbox-add')">
+      <div class="ineed-check-container pull-left"
+           ng-click="toggleCompleted(need, $event)"
+           ng-class="'need-checkbox-' + need.completed">
       </div>
     </div>
     <div class="need-section need-section-text" ng-class="isNewNeed(need)? 'notify-need':''">

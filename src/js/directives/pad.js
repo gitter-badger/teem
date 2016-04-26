@@ -13,15 +13,19 @@ angular.module('Teem')
     return {
       controller: [
         'SessionSvc', 'url', '$rootScope', '$scope', '$route', '$location',
-        '$timeout',
+        '$timeout', 'needWidget',
         function(SessionSvc, url, $rootScope, $scope, $route, $location,
-        $timeout) {
+        $timeout, needWidget) {
 
           $scope.pad = {
             editing: false
           };
 
-          var buttons = ['bold', 'italic', 'underline', 'strikethrough'];
+          var buttons = ['bold', 'italic', 'underline', 'strikethrough', 'need'];
+
+          $scope.padCreate = function(editor) {
+            needWidget.init(editor, $scope);
+          };
 
           $scope.padReady = function(editor) {
             // FIXME
@@ -34,7 +38,8 @@ angular.module('Teem')
               bold: 'style/fontWeight=bold',
               italic: 'style/fontStyle=italic',
               underline: 'style/textDecoration=underline',
-              strikethrough: 'style/textDecoration=line-through'
+              strikethrough: 'style/textDecoration=line-through',
+              need: 'need=need'
             };
 
             $scope.buttons = {};
@@ -48,6 +53,7 @@ angular.module('Teem')
               $timeout();
             });
 
+
             $scope.annotate = function(btn) {
               let [key, val] = annotationMap[btn].split('=');
               $scope.buttons[btn] = !$scope.buttons[btn];
@@ -56,6 +62,12 @@ angular.module('Teem')
               }
               editor.setAnnotation(key, val);
               editorElement.focus();
+            };
+
+            $scope.widget = function(type) {
+              if (type === 'need') {
+                needWidget.add();
+              }
             };
 
             $scope.editOn = function () {
